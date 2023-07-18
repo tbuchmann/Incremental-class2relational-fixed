@@ -15,6 +15,7 @@ class Class2TableImpl extends Class2Table {
 		super(trafo)
 	}
 	
+	// Transformation
 	override protected onTblCreation(Table tbl) {
 		var key = Relational_Factory.eINSTANCE.createColumn => [name = "objectID"]
 		key.type = Utils.getType(findIntegerDatatype())
@@ -22,6 +23,7 @@ class Class2TableImpl extends Class2Table {
 		tbl.key += key
 	}
 	
+	// Transformation
 	override protected colFrom(List<Column> attSinCol, List<Column> attSinCol_2, List<Table> attMulTbl,
 		Table parent
 	) {
@@ -65,12 +67,14 @@ class Class2TableImpl extends Class2Table {
 		new Type4col(columnsList)
 	}
 	
+	// Helper
 	def findIntegerDatatype() {
 		// Model traversal
 		val datatype = sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"]
 		datatype
 	}	
 	
+	// Helper
 	def removeNullTypeColumns(List<Column> cols) {
 		for (Column c : cols) {
 			if (c.type === null) 

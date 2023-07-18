@@ -8,8 +8,8 @@ class SingleAttribute2ColumnImpl extends SingleAttribute2Column {
 		super(trafo)
 	}
 	
-	override protected filterAtt(Attribute att) {
-		// Model Traversal
+	// Model Traversal
+	override protected filterAtt(Attribute att) {		
 		!(att.isMultiValued) && !(att.type instanceof atl.research.class_.Class)
 	}
 	

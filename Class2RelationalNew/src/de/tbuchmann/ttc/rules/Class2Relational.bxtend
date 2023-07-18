@@ -1,6 +1,7 @@
 sourcemodel "Class"
 targetmodel "Relational"
 
+// Transformation
 rule DataType2Type
 	src DataType dt;
 	trg Type t;
