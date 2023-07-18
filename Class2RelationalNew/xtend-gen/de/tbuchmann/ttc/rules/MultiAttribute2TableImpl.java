@@ -31,14 +31,14 @@ public class MultiAttribute2TableImpl extends MultiAttribute2Table {
   protected MultiAttribute2Table.Type4tblName tblNameFrom(final String attName, final atl.research.class_.Class owner) {
     MultiAttribute2Table.Type4tblName _xblockexpression = null;
     {
-      String tblName = owner.getName();
+      String tblName = "Table";
+      if ((owner != null)) {
+        tblName = owner.getName();
+      }
       if (((tblName == null) || (tblName == ""))) {
         tblName = "Table";
       }
-      String _name = owner.getName();
-      String _plus = (_name + "_");
-      String _plus_1 = (_plus + attName);
-      _xblockexpression = new MultiAttribute2Table.Type4tblName(_plus_1);
+      _xblockexpression = new MultiAttribute2Table.Type4tblName(((tblName + "_") + attName));
     }
     return _xblockexpression;
   }
@@ -46,11 +46,14 @@ public class MultiAttribute2TableImpl extends MultiAttribute2Table {
   @Override
   protected MultiAttribute2Table.Type4col colFrom(final String attName, final Classifier type, final atl.research.class_.Class owner) {
     final ArrayList<Column> colList = CollectionLiterals.<Column>newArrayList();
+    String columnName = "Default";
+    if ((owner != null)) {
+      columnName = StringExtensions.toFirstLower(owner.getName());
+    }
+    final String colName = columnName;
     Column _createColumn = Relational_Factory.eINSTANCE.createColumn();
     final Procedure1<Column> _function = (Column it) -> {
-      String _firstLower = StringExtensions.toFirstLower(owner.getName());
-      String _plus = (_firstLower + "Id");
-      it.setName(_plus);
+      it.setName((colName + "Id"));
       it.setType(Utils.getType(this.findIntegerDatatype()));
     };
     final Column idCol = ObjectExtensions.<Column>operator_doubleArrow(_createColumn, _function);

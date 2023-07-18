@@ -18,14 +18,18 @@ class MultiAttribute2TableImpl extends MultiAttribute2Table {
 	}
 	
 	override protected tblNameFrom(String attName, Class owner) {
-		var tblName = owner.name
+		var tblName = "Table"
+		if (owner !== null) tblName = owner.name
 		if (tblName === null || tblName === "") tblName = "Table"
-		new Type4tblName(owner.name + "_" + attName)
+		new Type4tblName(tblName + "_" + attName)
 	}
 	
 	override protected colFrom(String attName, Classifier type, Class owner) {
 		val colList = newArrayList
-		val idCol = Relational_Factory.eINSTANCE.createColumn() => [name = owner.name.toFirstLower + "Id"
+		var columnName = "Default"
+		if (owner !== null) columnName = owner.name.toFirstLower
+		val colName = columnName
+		val idCol = Relational_Factory.eINSTANCE.createColumn() => [name = colName + "Id"
 			type = Utils.getType(findIntegerDatatype())
 		]
 		val valCol = Relational_Factory.eINSTANCE.createColumn() => [name = attName
