@@ -15,9 +15,9 @@ class Class2TableImpl extends Class2Table {
 		super(trafo)
 	}
 	
-	// Transformation
+	// Transformation 23
 	override protected onTblCreation(Table tbl) {
-		var key = Relational_Factory.eINSTANCE.createColumn => [name = "objectID"]
+		var key = Relational_Factory.eINSTANCE.createColumn => [name = "objectId"]
 		key.type = Utils.getType(findIntegerDatatype())
 		tbl.col.add(0, key)
 		tbl.key += key
@@ -67,20 +67,19 @@ class Class2TableImpl extends Class2Table {
 		new Type4col(columnsList)
 	}
 	
-	// Helper
+	// Helper 13
 	def findIntegerDatatype() {
-		// Model traversal
 		val datatype = sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"]
 		datatype
 	}	
 	
-	// Helper
+	// Helper 25
 	def removeNullTypeColumns(List<Column> cols) {
 		for (Column c : cols) {
 			if (c.type === null) 
 				EcoreUtil.delete(c, true);
 			// check if corresponding attribute has null type
-			// Tracing
+			// Tracing 11
 			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
 			if (obj.type === null) {
 				c.owner = null;

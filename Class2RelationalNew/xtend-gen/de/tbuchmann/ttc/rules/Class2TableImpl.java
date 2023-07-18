@@ -32,7 +32,7 @@ public class Class2TableImpl extends Class2Table {
   protected void onTblCreation(final Table tbl) {
     Column _createColumn = Relational_Factory.eINSTANCE.createColumn();
     final Procedure1<Column> _function = (Column it) -> {
-      it.setName("objectID");
+      it.setName("objectId");
     };
     Column key = ObjectExtensions.<Column>operator_doubleArrow(_createColumn, _function);
     key.setType(Utils.getType(this.findIntegerDatatype()));
