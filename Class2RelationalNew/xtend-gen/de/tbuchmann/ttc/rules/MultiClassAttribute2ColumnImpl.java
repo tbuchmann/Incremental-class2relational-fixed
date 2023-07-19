@@ -42,8 +42,7 @@ public class MultiClassAttribute2ColumnImpl extends MultiClassAttribute2Column {
     MultiClassAttribute2Column.Type4tName _xblockexpression = null;
     {
       String name = "";
-      boolean _equals = Objects.equal(owner, null);
-      if (_equals) {
+      if ((owner == null)) {
         name = "Table";
       } else {
         name = owner.getName();

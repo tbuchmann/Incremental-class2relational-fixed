@@ -12,21 +12,24 @@ class MultiAttribute2TableImpl extends MultiAttribute2Table {
 		super(trafo)
 	}
 	
-	// Model Traversal
+	// Model Traversal 5
 	override protected filterAtt(Attribute att) {	
+		// Model Traversal 6
 		(att.isMultiValued) && !(att.type instanceof Class)
 	}
 	
-	// Transformation
+	// Transformation 7
 	override protected tblNameFrom(String attName, Class owner) {
+		// Transformation 20
 		var tblName = "Table"
 		if (owner !== null) tblName = owner.name
 		if (tblName === null || tblName === "") tblName = "Table"
 		new Type4tblName(tblName + "_" + attName)
 	}
 	
-	// Transformation
+	// Transformation 9
 	override protected colFrom(String attName, Classifier type, Class owner) {
+		// Transformation 48
 		val colList = newArrayList
 		var columnName = "Default"
 		if (owner !== null) columnName = owner.name.toFirstLower
@@ -44,7 +47,7 @@ class MultiAttribute2TableImpl extends MultiAttribute2Table {
 		return new Type4col(colList)
 	}
 	
-	// Helper
+	// Helper 13
 	def findIntegerDatatype() {
 		val datatype = sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"]
 		datatype

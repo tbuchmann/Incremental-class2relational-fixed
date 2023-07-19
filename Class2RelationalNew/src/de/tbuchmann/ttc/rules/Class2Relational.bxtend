@@ -1,13 +1,14 @@
 sourcemodel "Class"
 targetmodel "Relational"
 
-// Transformation
+// Transformation 11
 rule DataType2Type
 	src DataType dt;
 	trg Type t;
 	
 	dt.name --> t.name;
 
+// Transformation 20
 rule SingleAttribute2Column
 	src Attribute att | filter;
 	trg Column col;
@@ -15,6 +16,7 @@ rule SingleAttribute2Column
 	att.name --> col.name;
 	{att.type : DataType2Type} --> {col.type : DataType2Type};
 
+// Transformation 23
 rule MultiAttribute2Table
 	src Attribute att | filter;
 	trg Table tbl;
@@ -22,6 +24,7 @@ rule MultiAttribute2Table
 	att.name att.owner --> tbl.name;
 	att.name att.type att.owner --> tbl.col;
 	
+// Transformation 21
 rule SingleClassAttribute2Column
 	src Attribute att | filter;
 	trg Column col;
@@ -29,6 +32,7 @@ rule SingleClassAttribute2Column
 	att.name att.type --> col.name;
 	att.name att.type --> col.type;
 	
+// Transformation 35
 rule MultiClassAttribute2Column
 	src Attribute att | filter;
 	trg Table t;
@@ -39,6 +43,7 @@ rule MultiClassAttribute2Column
 	att.name att.owner --> id.name;
 	att.name att.owner --> fk.name;
 
+// Transformation 20
 rule Class2Table
 	src Class clz;
 	trg Table tbl | creation;

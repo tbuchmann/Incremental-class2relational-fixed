@@ -10,22 +10,22 @@ class SingleClassAttribute2ColumnImpl extends SingleClassAttribute2Column {
 		super(trafo)
 	}
 	
-	// Model Traversal
+	// Model Traversal 11
 	override protected filterAtt(Attribute att) {		
 		!(att.isMultiValued) && !(att.type instanceof DataType) 
 	}
 	
-	// Transformation
+	// Transformation 11
 	override protected colNameFrom(String attName, Classifier attType) {
 		new Type4colName(attName + "Id")
 	}
 	
-	// Transformation
+	// Transformation 12
 	override protected colTypeFrom(String attName, Classifier attType) {
 		new Type4colType(Utils.getType(findIntegerDatatype()))
 	}
 	
-	// Helper
+	// Helper 13
 	def findIntegerDatatype() {
 		val datatype = sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"]
 		datatype

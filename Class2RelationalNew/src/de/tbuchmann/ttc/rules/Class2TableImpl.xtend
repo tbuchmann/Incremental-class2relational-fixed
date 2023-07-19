@@ -23,21 +23,23 @@ class Class2TableImpl extends Class2Table {
 		tbl.key += key
 	}
 	
-	// Transformation
+	// Transformation 14
 	override protected colFrom(List<Column> attSinCol, List<Column> attSinCol_2, List<Table> attMulTbl,
 		Table parent
 	) {
+		// Helper 3
 		val columnsList = newArrayList
-		// save Object ID column
+		// Helper 10
 		if (!parent.col.empty) {
 			var key = parent.col.get(0)
 			columnsList += key	
 		}
 
-		// check for columns with null-Type and delete them (avoid dangling references)		
+		// Transformation 4		
 		for (Column c : attSinCol) {
-			// Tracing
+			// Tracing 11
 			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
+			// Transformation 14
 			if (obj.type !== null) {
 				columnsList += c	
 			}
@@ -47,9 +49,11 @@ class Class2TableImpl extends Class2Table {
 			}
 		}
 
+		// Transformation 4
 		for (Column c : attSinCol_2) {
-			// Tracing
+			// Tracing 11
 			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
+			// Transformation 14
 			if (obj.type !== null) {
 				columnsList += c	
 			}
@@ -58,12 +62,15 @@ class Class2TableImpl extends Class2Table {
 			}
 		}
 		// delete Tables that are created from attributes with null-Type
+		// Transformation 4
 		for (Table t : attMulTbl) {
-			// Tracing
+			// Tracing 11
 			var obj = unwrap(t.corr.source.get(0) as SingleElem) as Attribute
+			// Transformation 8
 			if (obj.type === null)
 				EcoreUtil.delete(t, true);
-		}		
+		}	
+		// Transformation 3	
 		new Type4col(columnsList)
 	}
 	
@@ -73,14 +80,16 @@ class Class2TableImpl extends Class2Table {
 		datatype
 	}	
 	
-	// Helper 25
+	// Helper 5
 	def removeNullTypeColumns(List<Column> cols) {
+		// Helper 12
 		for (Column c : cols) {
 			if (c.type === null) 
 				EcoreUtil.delete(c, true);
 			// check if corresponding attribute has null type
 			// Tracing 11
 			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
+			// Helper 11
 			if (obj.type === null) {
 				c.owner = null;
 				EcoreUtil.delete(c, true);	
