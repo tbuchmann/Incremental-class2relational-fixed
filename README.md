@@ -1,5 +1,7 @@
 # Incremental-class2relational
-A BXtendDSL solution for the TTC2023 case: Incremental MTL vs. GPLs: Class into Relational Database Schema Transformation Case
+This repository contains two solutions to the proposed transformation case:
+1. A BXtendDSL solution for the TTC2023 case: Incremental MTL vs. GPLs: Class into Relational Database Schema Transformation Case (initially submitted to TTC 2023)
+2. A BXtend (plain iterative, using our framework) solution, created after the Transformation Tool Contest, inspired by the discussions
 
 ## The case revealed a bug in our code generation engine
 
