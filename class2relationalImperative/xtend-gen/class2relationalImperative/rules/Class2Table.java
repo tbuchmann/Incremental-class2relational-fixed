@@ -28,19 +28,25 @@ public class Class2Table extends Elem2Elem {
       final Corr corr = this.getOrCreateCorrModelElement(clz, "Class2Table");
       EObject _orCreateTargetElem = this.getOrCreateTargetElem(corr, this.targetPackage.getTable());
       final Table targetTable = ((Table) _orCreateTargetElem);
-      Column _createColumn = this.targetFactory.createColumn();
-      final Procedure1<Column> _function_1 = (Column it) -> {
-        it.setName("objectID");
-        final Function1<DataType, Boolean> _function_2 = (DataType it_1) -> {
-          String _name = it_1.getName();
-          return Boolean.valueOf(Objects.equal(_name, "Integer"));
-        };
-        it.setType(DataType2Type.getType(IterableExtensions.<DataType>findFirst(Iterables.<DataType>filter(this.sourceModel.getContents(), DataType.class), _function_2)));
-      };
-      final Column colId = ObjectExtensions.<Column>operator_doubleArrow(_createColumn, _function_1);
       targetTable.setName(clz.getName());
-      EList<Column> _col = targetTable.getCol();
-      _col.add(colId);
+      int _size = targetTable.getCol().size();
+      boolean _equals = (_size == 0);
+      if (_equals) {
+        Column _createColumn = this.targetFactory.createColumn();
+        final Procedure1<Column> _function_1 = (Column it) -> {
+          it.setName("objectId");
+          final Function1<DataType, Boolean> _function_2 = (DataType it_1) -> {
+            String _name = it_1.getName();
+            return Boolean.valueOf(Objects.equal(_name, "Integer"));
+          };
+          it.setType(DataType2Type.getType(IterableExtensions.<DataType>findFirst(Iterables.<DataType>filter(this.sourceModel.getContents(), DataType.class), _function_2)));
+        };
+        final Column colId = ObjectExtensions.<Column>operator_doubleArrow(_createColumn, _function_1);
+        EList<Column> _col = targetTable.getCol();
+        _col.add(colId);
+        EList<Column> _key = targetTable.getKey();
+        _key.add(colId);
+      }
       EList<Attribute> _attr = clz.getAttr();
       for (final Attribute a : _attr) {
         boolean _isMultiValued = a.isMultiValued();

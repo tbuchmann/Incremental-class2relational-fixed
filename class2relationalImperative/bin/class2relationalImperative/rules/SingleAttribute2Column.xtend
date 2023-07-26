@@ -1,9 +1,11 @@
 package class2relationalImperative.rules
 
-import org.eclipse.emf.ecore.resource.Resource
 import atl.research.class_.Attribute
 import atl.research.class_.DataType
 import atl.research.relational_.Column
+import atl.research.relational_.Table
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 class SingleAttribute2Column extends Elem2Elem {
 	
@@ -14,6 +16,9 @@ class SingleAttribute2Column extends Elem2Elem {
 	override sourceToTarget() {
 		sourceModel.allContents.filter(typeof(Attribute)).filter[att | !att.multiValued].forEach[ attribute |
 			val corr = attribute.getOrCreateCorrModelElement("SingleAttribute2Column")
+			var targetObj = corr.getOrCreateTargetElem(targetPackage.column)
+			if (targetObj instanceof Table)
+				EcoreUtil.delete(targetObj)
 			val target = corr.getOrCreateTargetElem(targetPackage.column) as Column
 			if (attribute.type instanceof DataType) {
 				target.name = attribute.name

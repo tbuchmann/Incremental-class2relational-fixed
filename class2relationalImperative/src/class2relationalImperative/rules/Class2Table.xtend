@@ -18,12 +18,15 @@ class Class2Table extends Elem2Elem {
 		sourceModel.contents.filter(typeof(Class)).forEach[ clz |
 			val corr = clz.getOrCreateCorrModelElement("Class2Table")
 			val targetTable = corr.getOrCreateTargetElem(targetPackage.table) as Table
-			val colId = targetFactory.createColumn => [
-				name = "objectID"
-				type = DataType2Type.getType(sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"])
-			]
 			targetTable.name = clz.name
-			targetTable.col += colId
+			if (targetTable.col.size == 0) { 
+				val colId = targetFactory.createColumn => [
+					name = "objectId"
+					type = DataType2Type.getType(sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"])
+				]			
+				targetTable.col += colId
+				targetTable.key += colId
+			}
 			for (Attribute a : clz.attr) {
 				if (!a.isMultiValued) {
 					targetTable.col += elementsToCorr.get(a).targetElement as Column

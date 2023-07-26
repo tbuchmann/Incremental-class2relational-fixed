@@ -4,12 +4,14 @@ import atl.research.class_.Attribute;
 import atl.research.class_.Classifier;
 import atl.research.class_.DataType;
 import atl.research.relational_.Column;
+import atl.research.relational_.Table;
 import class2relationalImperative.correspondence.class2relationalImperative.Corr;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
@@ -29,6 +31,10 @@ public class SingleAttribute2Column extends Elem2Elem {
     };
     final Procedure1<Attribute> _function_1 = (Attribute attribute) -> {
       final Corr corr = this.getOrCreateCorrModelElement(attribute, "SingleAttribute2Column");
+      EObject targetObj = this.getOrCreateTargetElem(corr, this.targetPackage.getColumn());
+      if ((targetObj instanceof Table)) {
+        EcoreUtil.delete(targetObj);
+      }
       EObject _orCreateTargetElem = this.getOrCreateTargetElem(corr, this.targetPackage.getColumn());
       final Column target = ((Column) _orCreateTargetElem);
       Classifier _type = attribute.getType();
