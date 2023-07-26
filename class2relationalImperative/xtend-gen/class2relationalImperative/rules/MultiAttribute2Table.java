@@ -42,7 +42,7 @@ public class MultiAttribute2Table extends Elem2Elem {
       EObject _eContainer = attribute.eContainer();
       atl.research.class_.Class owner = ((atl.research.class_.Class) _eContainer);
       String _xifexpression = null;
-      if (((owner != null) && (owner.getName() != ""))) {
+      if ((((owner != null) && (owner.getName() != null)) && (owner.getName() != ""))) {
         _xifexpression = owner.getName();
       } else {
         _xifexpression = "Table";
@@ -63,8 +63,8 @@ public class MultiAttribute2Table extends Elem2Elem {
       };
       Column idCol = ObjectExtensions.<Column>operator_doubleArrow(_createColumn, _function_2);
       String _xifexpression_1 = null;
-      if ((owner == null)) {
-        _xifexpression_1 = "Default";
+      if ((((owner == null) || (owner.getName() == null)) || (owner.getName() == ""))) {
+        _xifexpression_1 = "tableId";
       } else {
         String _firstLower = StringExtensions.toFirstLower(owner.getName());
         _xifexpression_1 = (_firstLower + "Id");
@@ -89,8 +89,8 @@ public class MultiAttribute2Table extends Elem2Elem {
         } else {
           idCol = targetTable.getCol().get(0);
           String _xifexpression_2 = null;
-          if ((owner == null)) {
-            _xifexpression_2 = "Default";
+          if ((((owner == null) || (owner.getName() == null)) || (owner.getName() == ""))) {
+            _xifexpression_2 = "tableId";
           } else {
             String _firstLower_1 = StringExtensions.toFirstLower(owner.getName());
             _xifexpression_2 = (_firstLower_1 + "Id");
@@ -120,8 +120,8 @@ public class MultiAttribute2Table extends Elem2Elem {
         } else {
           idCol = targetTable.getCol().get(0);
           String _xifexpression_3 = null;
-          if ((owner == null)) {
-            _xifexpression_3 = "Default";
+          if ((((owner == null) || (owner.getName() == null)) || (owner.getName() == ""))) {
+            _xifexpression_3 = "tableId";
           } else {
             String _firstLower_2 = StringExtensions.toFirstLower(owner.getName());
             _xifexpression_3 = (_firstLower_2 + "Id");

@@ -23,13 +23,13 @@ class MultiAttribute2Table extends Elem2Elem {
 			var targetTable = corr.getOrCreateTargetElem(targetPackage.table) as Table
 			var owner  = attribute.eContainer as atl.research.class_.Class
 			
-			targetTable.name = (owner !== null && owner.name !== "")? owner.name : "Table" 
+			targetTable.name = (owner !== null && owner.name !== null && owner.name !== "")? owner.name : "Table" 
 			targetTable.name = targetTable.name + "_" + attribute.name
 			
 			var idCol = targetFactory.createColumn() => [
 				type = DataType2Type.getType(sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"])
 			]
-			idCol.name = (owner === null)? "Default" : owner.name.toFirstLower + "Id"
+			idCol.name = (owner === null || owner.name === null || owner.name === "")? "tableId" : owner.name.toFirstLower + "Id"
 			
 			if (attribute.type instanceof DataType) {															
 				if (targetTable.col.size == 0) {
@@ -41,7 +41,7 @@ class MultiAttribute2Table extends Elem2Elem {
 				}
 				else {
 					idCol = targetTable.col.get(0)
-					idCol.name = (owner === null)? "Default" : owner.name.toFirstLower + "Id"
+					idCol.name = (owner === null || owner.name === null || owner.name === "")? "tableId" : owner.name.toFirstLower + "Id"
 				}
 			}
 			else {
@@ -54,7 +54,7 @@ class MultiAttribute2Table extends Elem2Elem {
 					targetTable.col += fkCol
 				} else {
 					idCol = targetTable.col.get(0)
-					idCol.name = owner === null? "Default" : owner.name.toFirstLower + "Id"
+					idCol.name = (owner === null || owner.name === null || owner.name === "")? "tableId" : owner.name.toFirstLower + "Id"
 				}
 			}
 			targetModel.contents += targetTable
