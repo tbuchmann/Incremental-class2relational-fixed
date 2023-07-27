@@ -41,13 +41,14 @@ public class MultiClassAttribute2ColumnImpl extends MultiClassAttribute2Column {
   protected MultiClassAttribute2Column.Type4tName tNameFrom(final String attName, final atl.research.class_.Class owner, final Classifier attType) {
     MultiClassAttribute2Column.Type4tName _xblockexpression = null;
     {
-      String name = "";
-      if ((owner == null)) {
-        name = "Table";
+      String _xifexpression = null;
+      if ((((owner != null) && (owner.getName() != null)) && (owner.getName() != ""))) {
+        _xifexpression = owner.getName();
       } else {
-        name = owner.getName();
+        _xifexpression = "Table";
       }
-      _xblockexpression = new MultiClassAttribute2Column.Type4tName(((name + "_") + attName));
+      String tblName = _xifexpression;
+      _xblockexpression = new MultiClassAttribute2Column.Type4tName(((tblName + "_") + attName));
     }
     return _xblockexpression;
   }
@@ -56,13 +57,15 @@ public class MultiClassAttribute2ColumnImpl extends MultiClassAttribute2Column {
   protected MultiClassAttribute2Column.Type4idName idNameFrom(final String attName, final atl.research.class_.Class attOwner) {
     MultiClassAttribute2Column.Type4idName _xblockexpression = null;
     {
-      String name = "Default";
-      if ((attOwner != null)) {
-        name = attOwner.getName();
+      String _xifexpression = null;
+      if ((((attOwner == null) || (attOwner.getName() == null)) || (attOwner.getName() == ""))) {
+        _xifexpression = "tableId";
+      } else {
+        String _firstLower = StringExtensions.toFirstLower(attOwner.getName());
+        _xifexpression = (_firstLower + "Id");
       }
-      String _firstLower = StringExtensions.toFirstLower(name);
-      String _plus = (_firstLower + "Id");
-      _xblockexpression = new MultiClassAttribute2Column.Type4idName(_plus);
+      String name = _xifexpression;
+      _xblockexpression = new MultiClassAttribute2Column.Type4idName(name);
     }
     return _xblockexpression;
   }

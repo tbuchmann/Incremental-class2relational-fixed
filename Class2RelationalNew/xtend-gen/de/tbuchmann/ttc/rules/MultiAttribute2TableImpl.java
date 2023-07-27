@@ -31,13 +31,13 @@ public class MultiAttribute2TableImpl extends MultiAttribute2Table {
   protected MultiAttribute2Table.Type4tblName tblNameFrom(final String attName, final atl.research.class_.Class owner) {
     MultiAttribute2Table.Type4tblName _xblockexpression = null;
     {
-      String tblName = "Table";
-      if ((owner != null)) {
-        tblName = owner.getName();
+      String _xifexpression = null;
+      if ((((owner != null) && (owner.getName() != null)) && (owner.getName() != ""))) {
+        _xifexpression = owner.getName();
+      } else {
+        _xifexpression = "Table";
       }
-      if (((tblName == null) || (tblName == ""))) {
-        tblName = "Table";
-      }
+      String tblName = _xifexpression;
       _xblockexpression = new MultiAttribute2Table.Type4tblName(((tblName + "_") + attName));
     }
     return _xblockexpression;
@@ -46,14 +46,17 @@ public class MultiAttribute2TableImpl extends MultiAttribute2Table {
   @Override
   protected MultiAttribute2Table.Type4col colFrom(final String attName, final Classifier type, final atl.research.class_.Class owner) {
     final ArrayList<Column> colList = CollectionLiterals.<Column>newArrayList();
-    String columnName = "Default";
-    if ((owner != null)) {
-      columnName = StringExtensions.toFirstLower(owner.getName());
+    String _xifexpression = null;
+    if ((((owner == null) || (owner.getName() == null)) || (owner.getName() == ""))) {
+      _xifexpression = "tableId";
+    } else {
+      String _firstLower = StringExtensions.toFirstLower(owner.getName());
+      _xifexpression = (_firstLower + "Id");
     }
-    final String colName = columnName;
+    final String columnName = _xifexpression;
     Column _createColumn = Relational_Factory.eINSTANCE.createColumn();
     final Procedure1<Column> _function = (Column it) -> {
-      it.setName((colName + "Id"));
+      it.setName(columnName);
       it.setType(Utils.getType(this.findIntegerDatatype()));
     };
     final Column idCol = ObjectExtensions.<Column>operator_doubleArrow(_createColumn, _function);

@@ -31,19 +31,23 @@ class MultiClassAttribute2ColumnImpl extends MultiClassAttribute2Column {
 	
 	// Transformation 25
 	override protected tNameFrom(String attName, Class owner, Classifier attType) {
+		var tblName = (owner !== null && owner.name !== null && owner.name !== "")? owner.name : "Table" 
+		/*		
+		new Type4tblName(tblName + "_" + attName)
 		var name = ""
 		if (owner === null)
 			name = "Table"
 		else
 			name = owner.name
-		new Type4tName(name + "_" + attName)
+		*/
+		new Type4tName(tblName + "_" + attName)
 	}
 	
 	// Transformation 21
 	override protected idNameFrom(String attName, Class attOwner) {
-		var name = "Default"
-		if (attOwner !== null) name = attOwner.name
-		new Type4idName(name.toFirstLower + "Id")
+		var name = (attOwner === null || attOwner.name === null || attOwner.name === "")? "tableId" : attOwner.name.toFirstLower + "Id"
+		
+		new Type4idName(name)
 	}
 	
 	// Transformation 11
