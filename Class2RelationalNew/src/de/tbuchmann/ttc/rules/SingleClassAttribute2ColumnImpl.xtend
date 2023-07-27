@@ -12,7 +12,9 @@ class SingleClassAttribute2ColumnImpl extends SingleClassAttribute2Column {
 	
 	// Model Traversal 11
 	override protected filterAtt(Attribute att) {		
-		!(att.isMultiValued) && !(att.type instanceof DataType) 
+		!(att.isMultiValued) && !(att.type instanceof DataType)// && (att.type !== null) does not work, because this 
+		// would result in attributes without a correspondence element and consequently the transformation
+		// will yield an exception in Class2Table when attribute.getCorr is called on EACH attribute
 	}
 	
 	// Transformation 11

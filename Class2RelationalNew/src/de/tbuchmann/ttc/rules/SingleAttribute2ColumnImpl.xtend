@@ -10,7 +10,7 @@ class SingleAttribute2ColumnImpl extends SingleAttribute2Column {
 	
 	// Model Traversal 14
 	override protected filterAtt(Attribute att) {		
-		!(att.isMultiValued) && !(att.type instanceof atl.research.class_.Class)
+		!(att.isMultiValued) && !(att.type instanceof atl.research.class_.Class) && (att.type !== null)
 	}
 	
 }

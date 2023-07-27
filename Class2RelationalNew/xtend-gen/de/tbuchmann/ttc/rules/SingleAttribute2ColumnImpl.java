@@ -11,6 +11,6 @@ public class SingleAttribute2ColumnImpl extends SingleAttribute2Column {
 
   @Override
   protected boolean filterAtt(final Attribute att) {
-    return ((!att.isMultiValued()) && (!(att.getType() instanceof atl.research.class_.Class)));
+    return (((!att.isMultiValued()) && (!(att.getType() instanceof atl.research.class_.Class))) && (att.getType() != null));
   }
 }

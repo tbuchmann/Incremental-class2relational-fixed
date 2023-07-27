@@ -6,7 +6,6 @@ import atl.research.class_.DataType;
 import atl.research.relational_.Column;
 import atl.research.relational_.Relational_Factory;
 import atl.research.relational_.Table;
-import atl.research.relational_.Type;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import de.tbuchmann.ttc.corrmodel.CorrElem;
@@ -55,15 +54,12 @@ public class Class2TableImpl extends Class2Table {
             CorrElem _get = this.getCorr(c).getSource().get(0);
             Object _unwrap = Elem2Elem.unwrap(((SingleElem) _get));
             Attribute obj = ((Attribute) _unwrap);
-            atl.research.class_.Class _owner = obj.getOwner();
-            boolean _tripleEquals = (_owner == null);
-            if (_tripleEquals) {
+            if (((obj.getOwner() == null) || (obj.getType() == null))) {
               toDelete.add(c);
             }
           }
         }
       }
-      EcoreUtil.deleteAll(toDelete, true);
       final ArrayList<Column> columnsList = CollectionLiterals.<Column>newArrayList();
       boolean _isEmpty = parent.getCol().isEmpty();
       boolean _not = (!_isEmpty);
@@ -82,23 +78,25 @@ public class Class2TableImpl extends Class2Table {
           if (((obj_1.getType() != null) && (obj_1.getOwner() != null))) {
             columnsList.add(c_1);
           } else {
-            c_1.setOwner(null);
-            EcoreUtil.delete(c_1, true);
+            toDelete.add(c_1);
           }
         }
       }
+      this.spareElems.addAll(toDelete);
+      final ArrayList<Table> tblToDelete = CollectionLiterals.<Table>newArrayList();
       for (final Table t : attMulTbl) {
         {
           CorrElem _get_1 = this.getCorr(t).getSource().get(0);
           Object _unwrap_1 = Elem2Elem.unwrap(((SingleElem) _get_1));
           Attribute obj_1 = ((Attribute) _unwrap_1);
           Classifier _type = obj_1.getType();
-          boolean _tripleEquals_1 = (_type == null);
-          if (_tripleEquals_1) {
-            EcoreUtil.delete(t, true);
+          boolean _tripleEquals = (_type == null);
+          if (_tripleEquals) {
+            tblToDelete.add(t);
           }
         }
       }
+      EcoreUtil.deleteAll(tblToDelete, true);
       _xblockexpression = new Class2Table.Type4col(columnsList);
     }
     return _xblockexpression;
@@ -115,26 +113,5 @@ public class Class2TableImpl extends Class2Table {
       _xblockexpression = datatype;
     }
     return _xblockexpression;
-  }
-
-  public void removeNullTypeColumns(final List<Column> cols) {
-    for (final Column c : cols) {
-      {
-        Type _type = c.getType();
-        boolean _tripleEquals = (_type == null);
-        if (_tripleEquals) {
-          EcoreUtil.delete(c, true);
-        }
-        CorrElem _get = this.getCorr(c).getSource().get(0);
-        Object _unwrap = Elem2Elem.unwrap(((SingleElem) _get));
-        Attribute obj = ((Attribute) _unwrap);
-        Classifier _type_1 = obj.getType();
-        boolean _tripleEquals_1 = (_type_1 == null);
-        if (_tripleEquals_1) {
-          c.setOwner(null);
-          EcoreUtil.delete(c, true);
-        }
-      }
-    }
   }
 }

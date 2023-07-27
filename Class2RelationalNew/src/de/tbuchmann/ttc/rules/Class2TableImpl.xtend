@@ -35,18 +35,19 @@ class Class2TableImpl extends Class2Table {
 		 * Problem: attribute should be deleted rather than setting the EOpposite of the containment reference to null
 		 * because this results in an invalid EMF-model
 		 */
-		
+		// Helper 21	
 		val toDelete = newArrayList
 		for (Column c : parent.col) {
 			if (c.name !== "objectId" && c.corr !== null) {
 				if (c.corr.source.size !== 0) {
+					// Tracing 12
 					var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
-					if (obj.owner === null)
+					// Transformation 6
+					if (obj.owner === null || obj.type === null)
 						toDelete += c
 				}
 			}
 		}
-		EcoreUtil.deleteAll(toDelete, true)
 		
 		// Helper 3
 		val columnsList = newArrayList
@@ -58,6 +59,7 @@ class Class2TableImpl extends Class2Table {
 		val allColumns = newArrayList		
 		allColumns.addAll(attSinCol)
 		allColumns.addAll(attSinCol_2)
+		
 		// Transformation 4		
 		for (Column c : allColumns) {
 			// Tracing 11
@@ -67,49 +69,26 @@ class Class2TableImpl extends Class2Table {
 				columnsList += c	
 			}
 			else {
-				c.owner = null
-				EcoreUtil.delete(c, true)
+				toDelete += c				
 			}
 		}
-		
-/*
-		// Transformation 4		
-		for (Column c : attSinCol) {
-			// Tracing 11
-			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
-			// Transformation 14
-			if (obj.type !== null && obj.owner !== null) {
-				columnsList += c	
-			}
-			else {
-				c.owner = null
-				EcoreUtil.delete(c, true)
-			}
-		}
-
 		// Transformation 4
-		for (Column c : attSinCol_2) {
-			// Tracing 11
-			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
-			// Transformation 14
-			if (obj.type !== null && obj.owner !== null) {
-				columnsList += c	
-			}
-			else {
-				EcoreUtil.delete(c, true)
-			}
-		}
+		spareElems.addAll(toDelete)
+		//EcoreUtil.deleteAll(toDelete, true)
+		//targetModel.contents.removeAll(toDelete)
 		
-*/
 		// delete Tables that are created from attributes with null-Type
 		// Transformation 4
+		val tblToDelete = newArrayList
 		for (Table t : attMulTbl) {
 			// Tracing 11
 			var obj = unwrap(t.corr.source.get(0) as SingleElem) as Attribute
-			// Transformation 8
+			// Transformation 6
 			if (obj.type === null)
-				EcoreUtil.delete(t, true);
-		}	
+				tblToDelete += t
+		}
+		EcoreUtil.deleteAll(tblToDelete, true)
+		
 		// Transformation 3	
 		new Type4col(columnsList)
 	}
@@ -119,7 +98,7 @@ class Class2TableImpl extends Class2Table {
 		val datatype = sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"]
 		datatype
 	}	
-	
+/*	
 	// Helper 5
 	def removeNullTypeColumns(List<Column> cols) {
 		// Helper 12
@@ -136,5 +115,14 @@ class Class2TableImpl extends Class2Table {
 			}
 		}
 	}
-	
+ 	
+	// Helper
+	def cleanUp() {
+		val toDelete = newArrayList
+		targetModel.contents.filter(typeof(Column)).filter[c | c.owner === null].forEach[ elem |
+			toDelete += elem
+		]
+		EcoreUtil.deleteAll(toDelete, true)
+	}
+*/	
 }
