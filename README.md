@@ -7,7 +7,7 @@ This repository contains two solutions to the proposed transformation case:
 
 To make the solution run, please do the following, after Code has been generated from the BXtendDSL specification:
 
-Goto "src-gen" folder and to the "rules" package. Comment the following line in "Class2Table.xtend"
+In the project "Class2RelationalNew" goto "src-gen" folder and to the "rules" package. Comment the following line in "Class2Table.xtend"
 
 ```clz.getAttr().forEach[corr.assertRuleId("SingleAttribute2Column", "SingleClassAttribute2Column", "MultiAttribute2Table")]```
 
