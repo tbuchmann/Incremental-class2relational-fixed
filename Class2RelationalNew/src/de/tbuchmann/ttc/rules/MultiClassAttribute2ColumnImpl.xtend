@@ -29,21 +29,13 @@ class MultiClassAttribute2ColumnImpl extends MultiClassAttribute2Column {
 		(att.isMultiValued) && (att.type instanceof Class)
 	}
 	
-	// Transformation 25
+	// Transformation 27
 	override protected tNameFrom(String attName, Class owner, Classifier attType) {
 		var tblName = (owner !== null && owner.name !== null && owner.name !== "")? owner.name : "Table" 
-		/*		
-		new Type4tblName(tblName + "_" + attName)
-		var name = ""
-		if (owner === null)
-			name = "Table"
-		else
-			name = owner.name
-		*/
 		new Type4tName(tblName + "_" + attName)
 	}
 	
-	// Transformation 21
+	// Transformation 25
 	override protected idNameFrom(String attName, Class attOwner) {
 		var name = (attOwner === null || attOwner.name === null || attOwner.name === "")? "tableId" : attOwner.name.toFirstLower + "Id"
 		
@@ -55,9 +47,9 @@ class MultiClassAttribute2ColumnImpl extends MultiClassAttribute2Column {
 		new Type4fkName(attName + "Id")
 	}
 	
-	// Helper3
+	// Helper 3
 	def findIntegerDatatype() {
-		// Model Traversal
+		// Model Traversal 10
 		val datatype = sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"]
 		datatype
 	}	

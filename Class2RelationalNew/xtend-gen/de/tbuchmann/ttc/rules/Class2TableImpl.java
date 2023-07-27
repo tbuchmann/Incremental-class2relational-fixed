@@ -45,6 +45,25 @@ public class Class2TableImpl extends Class2Table {
   protected Class2Table.Type4col colFrom(final List<Column> attSinCol, final List<Column> attSinCol_2, final List<Table> attMulTbl, final Table parent) {
     Class2Table.Type4col _xblockexpression = null;
     {
+      final ArrayList<Column> toDelete = CollectionLiterals.<Column>newArrayList();
+      EList<Column> _col = parent.getCol();
+      for (final Column c : _col) {
+        if (((c.getName() != "objectId") && (this.getCorr(c) != null))) {
+          int _size = this.getCorr(c).getSource().size();
+          boolean _tripleNotEquals = (_size != 0);
+          if (_tripleNotEquals) {
+            CorrElem _get = this.getCorr(c).getSource().get(0);
+            Object _unwrap = Elem2Elem.unwrap(((SingleElem) _get));
+            Attribute obj = ((Attribute) _unwrap);
+            atl.research.class_.Class _owner = obj.getOwner();
+            boolean _tripleEquals = (_owner == null);
+            if (_tripleEquals) {
+              toDelete.add(c);
+            }
+          }
+        }
+      }
+      EcoreUtil.deleteAll(toDelete, true);
       final ArrayList<Column> columnsList = CollectionLiterals.<Column>newArrayList();
       boolean _isEmpty = parent.getCol().isEmpty();
       boolean _not = (!_isEmpty);
@@ -52,43 +71,30 @@ public class Class2TableImpl extends Class2Table {
         Column key = parent.getCol().get(0);
         columnsList.add(key);
       }
-      for (final Column c : attSinCol) {
+      final ArrayList<Column> allColumns = CollectionLiterals.<Column>newArrayList();
+      allColumns.addAll(attSinCol);
+      allColumns.addAll(attSinCol_2);
+      for (final Column c_1 : allColumns) {
         {
-          CorrElem _get = this.getCorr(c).getSource().get(0);
-          Object _unwrap = Elem2Elem.unwrap(((SingleElem) _get));
-          Attribute obj = ((Attribute) _unwrap);
-          Classifier _type = obj.getType();
-          boolean _tripleNotEquals = (_type != null);
-          if (_tripleNotEquals) {
-            columnsList.add(c);
-          } else {
-            c.setOwner(null);
-            EcoreUtil.delete(c, true);
-          }
-        }
-      }
-      for (final Column c_1 : attSinCol_2) {
-        {
-          CorrElem _get = this.getCorr(c_1).getSource().get(0);
-          Object _unwrap = Elem2Elem.unwrap(((SingleElem) _get));
-          Attribute obj = ((Attribute) _unwrap);
-          Classifier _type = obj.getType();
-          boolean _tripleNotEquals = (_type != null);
-          if (_tripleNotEquals) {
+          CorrElem _get_1 = this.getCorr(c_1).getSource().get(0);
+          Object _unwrap_1 = Elem2Elem.unwrap(((SingleElem) _get_1));
+          Attribute obj_1 = ((Attribute) _unwrap_1);
+          if (((obj_1.getType() != null) && (obj_1.getOwner() != null))) {
             columnsList.add(c_1);
           } else {
+            c_1.setOwner(null);
             EcoreUtil.delete(c_1, true);
           }
         }
       }
       for (final Table t : attMulTbl) {
         {
-          CorrElem _get = this.getCorr(t).getSource().get(0);
-          Object _unwrap = Elem2Elem.unwrap(((SingleElem) _get));
-          Attribute obj = ((Attribute) _unwrap);
-          Classifier _type = obj.getType();
-          boolean _tripleEquals = (_type == null);
-          if (_tripleEquals) {
+          CorrElem _get_1 = this.getCorr(t).getSource().get(0);
+          Object _unwrap_1 = Elem2Elem.unwrap(((SingleElem) _get_1));
+          Attribute obj_1 = ((Attribute) _unwrap_1);
+          Classifier _type = obj_1.getType();
+          boolean _tripleEquals_1 = (_type == null);
+          if (_tripleEquals_1) {
             EcoreUtil.delete(t, true);
           }
         }

@@ -27,6 +27,27 @@ class Class2TableImpl extends Class2Table {
 	override protected colFrom(List<Column> attSinCol, List<Column> attSinCol_2, List<Table> attMulTbl,
 		Table parent
 	) {
+		/*
+		 * How to handle columns whose corresponding attribute has owner set to null
+		 * the problem with the benchmark is that the opposite direction class.attribute is still valid
+		 * and thus the attribute is transformed into a column
+		 * however, the column never gets assigned to a table
+		 * Problem: attribute should be deleted rather than setting the EOpposite of the containment reference to null
+		 * because this results in an invalid EMF-model
+		 */
+		
+		val toDelete = newArrayList
+		for (Column c : parent.col) {
+			if (c.name !== "objectId" && c.corr !== null) {
+				if (c.corr.source.size !== 0) {
+					var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
+					if (obj.owner === null)
+						toDelete += c
+				}
+			}
+		}
+		EcoreUtil.deleteAll(toDelete, true)
+		
 		// Helper 3
 		val columnsList = newArrayList
 		// Helper 10
@@ -34,13 +55,30 @@ class Class2TableImpl extends Class2Table {
 			var key = parent.col.get(0)
 			columnsList += key	
 		}
-
+		val allColumns = newArrayList		
+		allColumns.addAll(attSinCol)
+		allColumns.addAll(attSinCol_2)
+		// Transformation 4		
+		for (Column c : allColumns) {
+			// Tracing 11
+			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
+			// Transformation 14
+			if (obj.type !== null && obj.owner !== null) {
+				columnsList += c	
+			}
+			else {
+				c.owner = null
+				EcoreUtil.delete(c, true)
+			}
+		}
+		
+/*
 		// Transformation 4		
 		for (Column c : attSinCol) {
 			// Tracing 11
 			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
 			// Transformation 14
-			if (obj.type !== null) {
+			if (obj.type !== null && obj.owner !== null) {
 				columnsList += c	
 			}
 			else {
@@ -54,13 +92,15 @@ class Class2TableImpl extends Class2Table {
 			// Tracing 11
 			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
 			// Transformation 14
-			if (obj.type !== null) {
+			if (obj.type !== null && obj.owner !== null) {
 				columnsList += c	
 			}
 			else {
 				EcoreUtil.delete(c, true)
 			}
 		}
+		
+*/
 		// delete Tables that are created from attributes with null-Type
 		// Transformation 4
 		for (Table t : attMulTbl) {
