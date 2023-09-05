@@ -74,8 +74,6 @@ class Class2TableImpl extends Class2Table {
 		}
 		// Transformation 4
 		spareElems.addAll(toDelete)
-		//EcoreUtil.deleteAll(toDelete, true)
-		//targetModel.contents.removeAll(toDelete)
 		
 		// delete Tables that are created from attributes with null-Type
 		// Transformation 4
@@ -98,31 +96,5 @@ class Class2TableImpl extends Class2Table {
 		val datatype = sourceModel.contents.filter(typeof(DataType)).findFirst[name == "Integer"]
 		datatype
 	}	
-/*	
-	// Helper 5
-	def removeNullTypeColumns(List<Column> cols) {
-		// Helper 12
-		for (Column c : cols) {
-			if (c.type === null) 
-				EcoreUtil.delete(c, true);
-			// check if corresponding attribute has null type
-			// Tracing 11
-			var obj = unwrap(c.corr.source.get(0) as SingleElem) as Attribute
-			// Helper 11
-			if (obj.type === null) {
-				c.owner = null;
-				EcoreUtil.delete(c, true);	
-			}
-		}
-	}
- 	
-	// Helper
-	def cleanUp() {
-		val toDelete = newArrayList
-		targetModel.contents.filter(typeof(Column)).filter[c | c.owner === null].forEach[ elem |
-			toDelete += elem
-		]
-		EcoreUtil.deleteAll(toDelete, true)
-	}
-*/	
+	
 }
